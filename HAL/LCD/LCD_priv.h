@@ -18,4 +18,6 @@ static void LCD_vidLatch(u8 Copy_u8Data);
 
 static inline void LCD_VoidDisplayAnyNumber(s32 Copy_s32Num);
 
+static inline u8 LCD_u8ReturnNumOfDigits(f32 Copy_s32Num);
+
 #endif /* LCD_PRIV_H_ */

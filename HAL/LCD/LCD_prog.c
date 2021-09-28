@@ -102,11 +102,17 @@ ES_t LCD_enuDisplayIntegerNum(s32 Copy_s32Num)
 ES_t LCD_DisplayFloatNumber(f32 Copy_f32Number){
 	ES_t Local_enuErrorState = ES_NOK;
 	s32 Local_s32IntPart =  (s32) Copy_f32Number;
-	s32 Local_f32FractPart = (Copy_f32Number - Local_s32IntPart) * THE_FRACTION_DIGITS;
+	f32 Local_f32FractPart = (Copy_f32Number - Local_s32IntPart);
 
 	LCD_VoidDisplayAnyNumber(Local_s32IntPart);
 	LCD_vidLatch('.');
-	LCD_VoidDisplayAnyNumber(Local_f32FractPart);
+	u8 Local_u8FractDigits = LCD_u8ReturnNumOfDigits(Local_f32FractPart);
+	for(u8 Local_u8Iterator = 0; Local_u8Iterator < Local_u8FractDigits; Local_u8Iterator++){
+		Local_f32FractPart -= (s32) Local_f32FractPart;
+		Local_f32FractPart *= 10;
+		LCD_VoidDisplayAnyNumber((s32) Local_f32FractPart);
+	}
+
 
 	return Local_enuErrorState = ES_OK;
 }
@@ -278,4 +284,17 @@ static inline void LCD_VoidDisplayAnyNumber(s32 Copy_s32Num)
 		Local_u8NumDigit --;
 	}
 
+}
+
+static inline u8 LCD_u8ReturnNumOfDigits(f32 Copy_s32Num){
+	u8 Local_u8Digits = 0;
+	while (Copy_s32Num > 0){
+		Copy_s32Num *= 10;
+		Copy_s32Num -= (s32) Copy_s32Num;
+		Local_u8Digits++;
+	}
+	if(Local_u8Digits > MAX_FRACTION_DIGITS)
+		Local_u8Digits = MAX_FRACTION_DIGITS;
+
+	return Local_u8Digits;
 }

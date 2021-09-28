@@ -46,6 +46,6 @@
 #define D0_PORT		DIO_u8PORTD
 #define D0_PIN		DIO_u8PIN7
 
-#define THE_FRACTION_DIGITS		100000   // number of zeros is the number of digits
+#define MAX_FRACTION_DIGITS		10   // number of zeros is the number of digits
 
 #endif /* LCD_CONFIG_H_ */
