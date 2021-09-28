@@ -59,7 +59,7 @@ ES_t CALC_enuReadNumber(s32 *Copy_u32Num){
  * By the User +, -, x, / and displays invalid Input if the Operation
  * Is Not Correctly Typed
  *
- * The Result Is Diplayed In the Left Of the Second Line
+ * The Result Is Displayed In the Left Of the Second Line
  * */
 ES_t CALC_enuDisplayResult(s32 Copy_u32FirstNum, s32 Copy_u32SecondNum){
 	ES_t Local_enuErrorState = ES_NOK;
@@ -87,7 +87,10 @@ ES_t CALC_enuDisplayResult(s32 Copy_u32FirstNum, s32 Copy_u32SecondNum){
 			}
 			else{
 				Local_f32ResultOfOperation = (f32) Copy_u32FirstNum / Copy_u32SecondNum;
-				LCD_DisplayFloatNumber(Local_f32ResultOfOperation);
+				if(Local_f32ResultOfOperation - (s32) Local_f32ResultOfOperation == 0)
+					LCD_enuDisplayIntegerNum((s32) Local_f32ResultOfOperation);
+				else
+					LCD_DisplayFloatNumber(Local_f32ResultOfOperation);
 			}
 			break;
 		default:
@@ -134,7 +137,7 @@ static inline void CALC_VoidReadingPrintNumber(s32 *Copy_u8Number){
 	u8 Local_Au8KeyPadValues[NMBER_OF_DIGITS] = {0,0,0,0,0};
 	u8 Local_u8CharactersChecker = 0;
 	u8 Local_u8Iterator = 0;
-	while(Local_u8Iterator < NMBER_OF_DIGITS){
+	while(Local_u8Iterator < NMBER_OF_DIGITS + 1){ // 1 is added to keep place for the Operator
 
 		KPAD_enuGetKeyValue(&Local_u8CharactersChecker);
 		_delay_ms(10);
