@@ -9,6 +9,6 @@
 #define APP_CALC_CONFIG_H_
 
 #define KEY_PAD_NUMBER		0
-#define NMBER_OF_DIGITS		5
+#define NMBER_OF_DIGITS		7
 
 #endif /* APP_CALC_CONFIG_H_ */
